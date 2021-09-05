@@ -17,6 +17,10 @@ const taskSlice = createSlice({
 		replaceTasks(state, action: PayloadAction<ITask[]>) {
 			state.splice(0, state.length, ...action.payload)
 		},
+		toggleComplete(state, action: PayloadAction<number>) {
+			const task = state.find((item) => item.id === action.payload)
+			task!.completed = !task!.completed
+		},
 	},
 })
 export const taskActions = taskSlice.actions
