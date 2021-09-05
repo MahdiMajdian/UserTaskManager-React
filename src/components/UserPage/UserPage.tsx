@@ -1,10 +1,12 @@
-import React from "react"
-import { useAppSelector } from "../../hooks/store-hook"
+import React, { useState } from "react"
+import { useAppDispatch, useAppSelector } from "../../hooks/store-hook"
+import { taskActions } from "../../store/tasks-slice"
 import TaskItem from "../TaskItem/TaskItem"
 interface IUserPage {
 	userId: number
 }
 const UserPage: React.FC<IUserPage> = (props) => {
+	const dispatch = useAppDispatch()
 	const user = useAppSelector((state) => state.users).find(
 		(item) => item.id === props.userId
 	)
@@ -16,6 +18,19 @@ const UserPage: React.FC<IUserPage> = (props) => {
 		(sum, cur) => sum + (cur.completed ? 1 : 0),
 		0
 	)
+	const [inputValue, setInputValue] = useState("")
+	const addTaskHandler = () => {
+		if (inputValue.trim().length !== 0) {
+			const task = {
+				userId: props.userId,
+				id: Date.now(),
+				title: inputValue,
+				completed: false,
+			}
+			dispatch(taskActions.addTask(task))
+		}
+		setInputValue("")
+	}
 	return (
 		<div className="h-full flex flex-col justify-between">
 			<div>
@@ -56,9 +71,13 @@ const UserPage: React.FC<IUserPage> = (props) => {
 				<div className="rounded-lg bg-white shadow-md overflow-hidden flex gap-4 justify-center items-center p-4">
 					<input
 						type="text"
+						value={inputValue}
+						onChange={(event) => setInputValue(event.target.value)}
 						className="bg-gray-200 rounded-full outline-none px-4 h-full w-full"
 					/>
-					<button className="rounded-lg bg-green-300 hover:bg-green-400 text-white py-2 px-4">
+					<button
+						className="rounded-lg bg-green-300 hover:bg-green-400 text-white py-2 px-4"
+						onClick={addTaskHandler}>
 						Add
 					</button>
 				</div>

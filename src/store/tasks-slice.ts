@@ -21,6 +21,9 @@ const taskSlice = createSlice({
 			const task = state.find((item) => item.id === action.payload)
 			task!.completed = !task!.completed
 		},
+		addTask(state, action: PayloadAction<ITask>) {
+			state.push(action.payload)
+		},
 		removeTask(state, action: PayloadAction<number>) {
 			const index = state.findIndex((item) => item.id === action.payload)
 			state.splice(index, 1)
