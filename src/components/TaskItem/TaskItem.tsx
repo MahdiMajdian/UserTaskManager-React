@@ -1,13 +1,32 @@
-import React from "react"
+import React, { useState } from "react"
 import { RiCloseCircleFill } from "react-icons/ri"
-
-const TaskItem = () => {
+import { useAppDispatch } from "../../hooks/store-hook"
+import { taskActions } from "../../store/tasks-slice"
+interface ITaskItem {
+	id:number
+	title: string
+	completed: boolean
+}
+const TaskItem: React.FC<ITaskItem> = (props) => {
+	const [isChecked, setIsChecked] = useState(props.completed)
+	const dispatch = useAppDispatch()
+	const checkHandler = () => {
+		setIsChecked(prev => !prev)
+		dispatch(taskActions.toggleComplete(props.id))
+	}
 	return (
 		<div>
 			<div className="rounded-lg bg-white shadow-md overflow-hidden flex gap-4 justify-between items-center p-4">
 				<div className="flex items-center gap-2">
-					<input type="checkbox" className="w-5 h-5" />
-					<p>Task Title</p>
+					<input
+						type="checkbox"
+						className="w-5 h-5"
+						checked={isChecked}
+						onChange={checkHandler}
+					/>
+					<p className={`${isChecked && "line-through"}`}>
+						{props.title}
+					</p>
 				</div>
 				<RiCloseCircleFill className="w-6 h-6 text-rose-600" />
 			</div>

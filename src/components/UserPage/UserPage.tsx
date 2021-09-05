@@ -8,7 +8,14 @@ const UserPage: React.FC<IUserPage> = (props) => {
 	const user = useAppSelector((state) => state.users).find(
 		(item) => item.id === props.userId
 	)
-    console.log(user)
+	const userTasks = useAppSelector((state) => state.tasks).filter(
+		(item) => item.userId === user?.id
+	)
+	const totalTasks = userTasks.length
+	const completedTasks = userTasks.reduce(
+		(sum, cur) => sum + (cur.completed ? 1 : 0),
+		0
+	)
 	return (
 		<div className="h-full flex flex-col justify-between">
 			<div>
@@ -22,27 +29,29 @@ const UserPage: React.FC<IUserPage> = (props) => {
 					</div>
 					<div className="w-52 h-52 mr-12 p-6">
 						<div className="bg-sky-400 rounded-full text-white text-5xl flex justify-center items-center w-full h-full">
-							100%
+							{Math.round((completedTasks / totalTasks) * 100)}%
 						</div>
 						<p className="text-center">Completed</p>
 					</div>
 				</div>
 				<div className="px-8">
 					<div className="border-t py-4 flex justify-between mt-4 border-b border-gray-400">
-						<p>Tasks: 20</p>
-						<p>8 Task Remaining</p>
+						<p>Tasks: {totalTasks}</p>
+						<p>{totalTasks - completedTasks} Task Remaining</p>
 					</div>
 				</div>
 			</div>
 
 			<div className="h-full flex flex-col justify-between p-4 pt-2">
 				<div className="flex flex-col h-64 overflow-y-auto gap-2">
-					<TaskItem />
-					<TaskItem />
-					<TaskItem />
-					<TaskItem />
-					<TaskItem />
-					<TaskItem />
+					{userTasks.map((task) => (
+						<TaskItem
+							key={task.id}
+							id={task.id}
+							title={task.title}
+							completed={task.completed}
+						/>
+					))}
 				</div>
 				<div className="rounded-lg bg-white shadow-md overflow-hidden flex gap-4 justify-center items-center p-4">
 					<input
