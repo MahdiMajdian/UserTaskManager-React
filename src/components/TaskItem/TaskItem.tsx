@@ -3,7 +3,7 @@ import { RiCloseCircleFill } from "react-icons/ri"
 import { useAppDispatch } from "../../hooks/store-hook"
 import { taskActions } from "../../store/tasks-slice"
 interface ITaskItem {
-	id:number
+	id: number
 	title: string
 	completed: boolean
 }
@@ -11,8 +11,11 @@ const TaskItem: React.FC<ITaskItem> = (props) => {
 	const [isChecked, setIsChecked] = useState(props.completed)
 	const dispatch = useAppDispatch()
 	const checkHandler = () => {
-		setIsChecked(prev => !prev)
+		setIsChecked((prev) => !prev)
 		dispatch(taskActions.toggleComplete(props.id))
+	}
+	const removeHandler = () => {
+		dispatch(taskActions.removeTask(props.id))
 	}
 	return (
 		<div>
@@ -28,7 +31,10 @@ const TaskItem: React.FC<ITaskItem> = (props) => {
 						{props.title}
 					</p>
 				</div>
-				<RiCloseCircleFill className="w-6 h-6 text-rose-600" />
+				<RiCloseCircleFill
+					onClick={removeHandler}
+					className="w-6 h-6 text-rose-600"
+				/>
 			</div>
 		</div>
 	)

@@ -21,6 +21,10 @@ const taskSlice = createSlice({
 			const task = state.find((item) => item.id === action.payload)
 			task!.completed = !task!.completed
 		},
+		removeTask(state, action: PayloadAction<number>) {
+			const index = state.findIndex((item) => item.id === action.payload)
+			state.splice(index, 1)
+		},
 	},
 })
 export const taskActions = taskSlice.actions
