@@ -25,6 +25,8 @@ const App: React.FC = () => {
 
 		fetchUsers()
 	}, [])
+
+	const userItem = users?.map((user) => <UserCard />)
 	return (
 		<div className="h-screen poppins">
 			<header className="w-full fixed flex items-center justify-between h-36 bg-gradient-to-tr from-sky-400 to-purple-600">
@@ -67,9 +69,12 @@ const App: React.FC = () => {
 			<main>
 				<div className="grid grid-cols-6 w-full h-screen pt-36">
 					<div className="col-span-2 flex flex-col items-center gap-4 p-4 overflow-y-auto">
-						{users?.map((user) => (
-							<UserCard />
-						))}
+						{users && userItem}
+						{!users && (
+							<h1 className="font-bold text-xl text-sky-500 text-center p-4">
+								There is no user!
+							</h1>
+						)}
 					</div>
 					<div className="col-span-4 bg-sky-100">s</div>
 				</div>
