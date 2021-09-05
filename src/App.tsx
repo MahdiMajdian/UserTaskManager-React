@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react"
-// import { TiTick } from "react-icons/ti"
+import { TiTick } from "react-icons/ti"
+import { RiCloseCircleFill } from "react-icons/ri"
 import UserCard from "./components/UserCard/UserCard"
 import { useAppDispatch, useAppSelector } from "./hooks/store-hook"
 import { fetchData } from "./store/user-actions"
+import UserPage from "./components/UserPage/UserPage"
 // import { IUser } from "./types"
 const App: React.FC = () => {
-	const [selectedUser, setSelectedUser] = useState()
+	const [selectedUser, setSelectedUser] = useState<number>()
 	const dispatch = useAppDispatch()
 	const users = useAppSelector((state) => state.users)
 	useEffect(() => {
 		dispatch(fetchData())
 	}, [dispatch])
 
+	const selectUserHandler = (id: number) => {
+		setSelectedUser(id)
+	}
 	const userItem = users?.map((user) => (
 		<UserCard
 			key={user.id}
@@ -19,6 +24,7 @@ const App: React.FC = () => {
 			name={user.name}
 			email={user.email}
 			username={user.username}
+			onSelect={selectUserHandler}
 		/>
 	))
 	return (
@@ -71,19 +77,10 @@ const App: React.FC = () => {
 						)}
 					</div>
 					<div className="col-span-4 bg-sky-100">
-						{/* {!selectedUser && <h1 className='p-8'>Select user to begin with</h1>} */}
-						<div className='h-full'>
-							<div className='bg-orange-600 flex'>
-								<div>
-									<h1>Mahdi Majdian</h1>
-									<p>(majdian_mahdi)</p>
-									<p>MajdianMahdi@gmail.com</p>
-								</div>
-								<div></div>
-							</div>
-							<div className='bg-orange-500'>sdfsdf</div>
-
-						</div>
+						{!selectedUser && (
+							<h1 className="p-8">Select user to begin with</h1>
+						)}
+						{selectedUser && <UserPage userId={selectedUser} />}
 					</div>
 				</div>
 			</main>

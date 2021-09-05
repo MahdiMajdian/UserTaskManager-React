@@ -1,19 +1,24 @@
 import React from "react"
+import { useAppSelector } from "../../hooks/store-hook"
 import TaskItem from "../TaskItem/TaskItem"
 interface IUserPage {
 	userId: number
 }
-const UserPage: React.FC<IUserPage> = () => {
+const UserPage: React.FC<IUserPage> = (props) => {
+	const user = useAppSelector((state) => state.users).find(
+		(item) => item.id === props.userId
+	)
+    console.log(user)
 	return (
 		<div className="h-full flex flex-col justify-between">
 			<div>
 				<div className="flex justify-between">
 					<div className="p-8">
 						<h1 className="text-4xl font-medium pb-12">
-							Mahdi Majdian
+							{user?.name}
 						</h1>
-						<p className="text-gray-700">(majdian_mahdi)</p>
-						<p className="text-gray-700">MajdianMahdi@gmail.com</p>
+						<p className="text-gray-700">({user?.username})</p>
+						<p className="text-gray-700">{user?.email}</p>
 					</div>
 					<div className="w-52 h-52 mr-12 p-6">
 						<div className="bg-sky-400 rounded-full text-white text-5xl flex justify-center items-center w-full h-full">

@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors')
+const colors = require("tailwindcss/colors")
 
 module.exports = {
 	purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
@@ -13,6 +13,7 @@ module.exports = {
 				rose: colors.rose,
 				amber: colors.amber,
 				emerald: colors.emerald,
+				orange: colors.orange,
 			},
 		},
 	},
