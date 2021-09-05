@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { stat } from "fs"
 import { IUser } from "../types"
-interface IUsers {
-	items: IUser[]
-}
+
 const initialState: IUser[] = [
 	// {
 	// 	id: 1,
@@ -18,7 +15,7 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		replaceUsers(state, action: PayloadAction<IUser[]>) {
-			state.splice(0 , state.length , ...action.payload)
+			state.splice(0, state.length, ...action.payload)
 		},
 	},
 })

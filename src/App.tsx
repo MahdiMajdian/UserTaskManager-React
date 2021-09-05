@@ -3,16 +3,19 @@ import { TiTick } from "react-icons/ti"
 import { RiCloseCircleFill } from "react-icons/ri"
 import UserCard from "./components/UserCard/UserCard"
 import { useAppDispatch, useAppSelector } from "./hooks/store-hook"
-import { fetchData } from "./store/user-actions"
+import { fetchUsers } from "./store/users-actions"
+import { fetchTasks } from "./store/tasks-actions"
 import UserPage from "./components/UserPage/UserPage"
 // import { IUser } from "./types"
 const App: React.FC = () => {
 	const [selectedUser, setSelectedUser] = useState<number>()
 	const dispatch = useAppDispatch()
 	const users = useAppSelector((state) => state.users)
+	const tasks = useAppSelector((state) => state.tasks)
 	useEffect(() => {
-		dispatch(fetchData())
-	}, [dispatch])
+		dispatch(fetchTasks())
+		dispatch(fetchUsers())
+	}, [])
 
 	const selectUserHandler = (id: number) => {
 		setSelectedUser(id)
@@ -27,6 +30,12 @@ const App: React.FC = () => {
 			onSelect={selectUserHandler}
 		/>
 	))
+	const totalTasks = tasks.length
+	const completedTasks = tasks.reduce(
+		(sum, cur) => sum + (cur.completed ? 1 : 0),
+		0
+	)
+	const remainingTasks = totalTasks - completedTasks
 	return (
 		<div className="h-screen poppins">
 			<header className="w-full fixed flex items-center justify-between h-36 bg-gradient-to-tr from-sky-500 to-sky-400">
@@ -40,7 +49,7 @@ const App: React.FC = () => {
 						</p>
 						<div className="rounded-full w-16 h-16 flex items-center justify-center bg-gradient-to-tr from-orange-600 to-orange-300">
 							<p className="text-white font-bold text-3xl ">
-								125
+								{totalTasks}
 							</p>
 						</div>
 					</div>
@@ -50,7 +59,7 @@ const App: React.FC = () => {
 						</p>
 						<div className="rounded-full w-16 h-16 flex items-center justify-center bg-gradient-to-tr from-orange-600 to-orange-300">
 							<p className="text-white font-bold text-3xl ">
-								125
+								{completedTasks}
 							</p>
 						</div>
 					</div>
@@ -60,7 +69,7 @@ const App: React.FC = () => {
 						</p>
 						<div className="rounded-full w-16 h-16 flex items-center justify-center bg-gradient-to-tr from-orange-600 to-orange-300">
 							<p className="text-white font-bold text-3xl ">
-								125
+								{remainingTasks}
 							</p>
 						</div>
 					</div>
