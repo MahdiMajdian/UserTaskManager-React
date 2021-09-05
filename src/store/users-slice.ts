@@ -1,17 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { IUser } from "../types"
 interface ITask {
 	taskId: number
 	taskName: string
 	taskIsDone: boolean
 }
-interface IUser {
-	name: string
-	username: string
-	email: string
-	tasks: ITask[]
-}
 
 interface IAdd {
+	id: number
 	name: string
 	username: string
 	email: string
@@ -23,6 +19,7 @@ interface IToggle {
 }
 const initialState: IUser[] = [
 	{
+		id: 1,
 		name: "Mahdi Majdian",
 		username: "mahdimajdian77",
 		email: "MajdianMahdi@gmail.com",
@@ -46,6 +43,7 @@ const userSlice = createSlice({
 			)
 			if (!user) {
 				state.push({
+					id: action.payload.id,
 					name: action.payload.name,
 					username: action.payload.username,
 					email: action.payload.email,
