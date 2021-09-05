@@ -44,7 +44,12 @@ const UserPage: React.FC<IUserPage> = (props) => {
 					</div>
 					<div className="w-52 h-52 mr-12 p-6">
 						<div className="bg-sky-400 rounded-full text-white text-5xl flex justify-center items-center w-full h-full">
-							{Math.round((completedTasks / totalTasks) * 100)}%
+							{totalTasks !== 0
+								? Math.round(
+										(completedTasks / totalTasks) * 100
+								  )
+								: 0}
+							%
 						</div>
 						<p className="text-center">Completed</p>
 					</div>
@@ -76,7 +81,11 @@ const UserPage: React.FC<IUserPage> = (props) => {
 						className="bg-gray-200 rounded-full outline-none px-4 h-full w-full"
 					/>
 					<button
-						className="rounded-lg bg-green-300 hover:bg-green-400 text-white py-2 px-4"
+						className={`rounded-lg ${
+							inputValue.trim().length !== 0
+								? "bg-green-500"
+								: "bg-green-300"
+						} text-white py-2 px-4`}
 						onClick={addTaskHandler}>
 						Add
 					</button>
