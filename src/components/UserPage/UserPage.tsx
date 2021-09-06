@@ -32,8 +32,8 @@ const UserPage: React.FC<IUserPage> = (props) => {
 		setInputValue("")
 	}
 	return (
-		<div className="h-full flex flex-col justify-between">
-			<div>
+		<div className="h-screen pt-40">
+			<div className="h-full flex flex-col gap-2">
 				<div className="flex justify-between">
 					<div className="p-8">
 						<h1 className="text-4xl font-medium pb-12">
@@ -60,10 +60,8 @@ const UserPage: React.FC<IUserPage> = (props) => {
 						<p>{totalTasks - completedTasks} Task Remaining</p>
 					</div>
 				</div>
-			</div>
 
-			<div className="h-full flex flex-col justify-between p-4 pt-2">
-				<div className="flex flex-col h-64 overflow-y-auto gap-2">
+				<div className="h-full p-4 pt-2 overflow-y-auto flex flex-col gap-2 pb-4 ">
 					{userTasks.map((task) => (
 						<TaskItem
 							key={task.id}
@@ -73,7 +71,7 @@ const UserPage: React.FC<IUserPage> = (props) => {
 						/>
 					))}
 				</div>
-				<div className="rounded-lg bg-white shadow-md overflow-hidden flex gap-4 justify-center items-center p-4">
+				<div className="rounded-lg m-2 mt-0 bg-white shadow-md flex gap-4 justify-center items-center p-4">
 					<input
 						type="text"
 						value={inputValue}

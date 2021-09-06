@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { TiTick } from "react-icons/ti"
-import { RiCloseCircleFill } from "react-icons/ri"
 import UserCard from "./components/UserCard/UserCard"
 import { useAppDispatch, useAppSelector } from "./hooks/store-hook"
 import { fetchUsers } from "./store/users-actions"
 import { fetchTasks } from "./store/tasks-actions"
 import UserPage from "./components/UserPage/UserPage"
-// import { IUser } from "./types"
 const App: React.FC = () => {
 	const [selectedUser, setSelectedUser] = useState<number>()
 	const dispatch = useAppDispatch()
@@ -15,7 +12,7 @@ const App: React.FC = () => {
 	useEffect(() => {
 		dispatch(fetchTasks())
 		dispatch(fetchUsers())
-	}, [])
+	}, [dispatch])
 
 	const selectUserHandler = (id: number) => {
 		setSelectedUser(id)
@@ -76,8 +73,8 @@ const App: React.FC = () => {
 				</div>
 			</header>
 			<main>
-				<div className="grid grid-cols-6 w-full h-screen pt-36">
-					<div className="col-span-2 flex flex-col items-center gap-4 p-4 overflow-y-auto">
+				<div className="grid grid-cols-6 w-full h-screen">
+					<div className="col-span-2 flex flex-col items-center gap-4 p-4 pt-40 overflow-y-auto">
 						{users.length !== 0 && userItem}
 						{users.length === 0 && (
 							<h1 className="font-bold text-xl text-sky-500 text-center p-4">
@@ -87,7 +84,9 @@ const App: React.FC = () => {
 					</div>
 					<div className="col-span-4 bg-sky-100">
 						{!selectedUser && (
-							<h1 className="p-8">Select user to begin with</h1>
+							<h1 className="p-8 pt-48">
+								Select user to begin with
+							</h1>
 						)}
 						{selectedUser && <UserPage userId={selectedUser} />}
 					</div>
